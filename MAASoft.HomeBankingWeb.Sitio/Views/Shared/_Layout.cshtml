@@ -1,0 +1,91 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Configuracion;
+@{ 
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+
+    bool usuarioLogueadoEsSocio = User.IsInRole(RolesNombres.SOCIO);
+}
+@section headContenido {
+    @RenderSection("headContenido", required: false)    
+}
+<div class="top-menu">
+    <div class="top-menu-logo">
+        <img src="~/Content/img/logo.png" alt="logo" height="120" />
+    </div>
+    <div id="userData" class="text-right">
+        @Html.Partial("_LoginPartial")
+    </div>
+</div>
+<div class="container-fluid body-content">
+    <div class="row">
+        @if (usuarioLogueadoEsSocio)
+        {
+            <div class="col-sm-3">
+                <div class="list-group">
+                    <a href="@Url.Action("Index", "Home")" class="list-group-item active">INICIO</a>
+                </div>
+                <div class="list-group">
+                    <a class="list-group-item active">DETALLE DE SALDOS</a>
+                    @if (Configuracion.CajaAhorrosHabilitado)
+                    {
+                    <a href="@Url.Action("CajaDeAhorros", "Home")" class="list-group-item">@Configuracion.CajaAhorrosTitulo</a>
+                    }
+                    @if (Configuracion.AhorroATerminoPesosHabilitado)
+                    {
+                    <a href="@Url.Action("AhorroATerminoEnPesos", "Home")" class="list-group-item">@Configuracion.AhorroATerminoPesosTitulo</a>
+                    }
+                    @if (Configuracion.AhorroATerminoDolaresHabilitado)
+                    {
+                    <a href="@Url.Action("AhorroATerminoEnDolares", "Home")" class="list-group-item">@Configuracion.AhorroATerminoDolaresTitulo</a>
+                    }
+                    @if (Configuracion.CuotasSocietariasHabilitado)
+                    {
+                    <a href="@Url.Action("CuotasSocietarias", "Home")" class="list-group-item">@Configuracion.CuotasSocietariasTitulo</a>
+                    }
+                    @if (Configuracion.AyudasEconomicasHabilitado)
+                    {
+                    <a href="@Url.Action("AyudasEconomicas", "Home")" class="list-group-item">@Configuracion.AyudasEconomicasTitulo</a>
+                    }
+                    @if (Configuracion.ImpuestosHabilitado)
+                    {
+                    <a href="@Url.Action("Impuestos", "Home")" class="list-group-item">@Configuracion.ImpuestosTitulo</a>
+                    }
+                    @if (Configuracion.ValoresAlCobroHabilitado)
+                    {
+                    <a href="@Url.Action("ValoresAlCobro", "Home")" class="list-group-item">@Configuracion.ValoresAlCobroTitulo</a>
+                    }
+                    @if (Configuracion.ValoresNegociadosHabilitado)
+                    {
+                    <a href="@Url.Action("ValoresNegociados", "Home")" class="list-group-item">@Configuracion.ValoresNegociadosTitulo</a>
+                    }
+                    @if (Configuracion.ServiciosCuotasHabilitado)
+                    {
+                        <a href="@Url.Action("ServiciosCuotas", "Home")" class="list-group-item">@Configuracion.ServiciosCuotasTitulo</a>
+                    }
+                </div>
+            </div>
+        }
+        <div class="col-sm-@(usuarioLogueadoEsSocio ? "9" : "12")">
+            <div class="row">
+                <div class="col-md-@(usuarioLogueadoEsSocio ? "10" : "12") col-sm-@(usuarioLogueadoEsSocio ? "9" : "12")">
+                    @RenderBody()
+                </div>
+                @if (usuarioLogueadoEsSocio)
+                {
+                    <div class="col-md-2 col-sm-3">
+                        <a title="PRESTAMOS" href="https://www.mutualspbelgrano.com/60-mil-en-36" target="_blank"><img src="~/Content/img/banner-1.png" class="img-responsive right-banner" /></a>
+                        <a title="TARJETA AMIGA" href="https://www.mutualspbelgrano.com/tarjeta-amiga-plus" target="_blank"><img src="~/Content/img/banner-2.png" class="img-responsive right-banner" /></a>
+                        <a title="TURISMO" href="https://www.mutualspbelgrano.com/turismo" target="_blank"><img src="~/Content/img/banner-3.png" class="img-responsive right-banner" /></a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <hr />
+    <footer class="text-center">
+        <p>&copy; @DateTime.Now.Year - @Configuracion.MutualNombre</p>
+    </footer>
+</div>
+
+@section bodyScripts {
+    @RenderSection("bodyScripts", required: false)        
+}

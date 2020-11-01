@@ -1,0 +1,85 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Core;
+@using MAASoft.HomeBankingWeb.Sitio.Models;
+@model MAASoft.HomeBankingWeb.Sitio.ViewModels.DetalleViewModelBase<AhorroTerminoVigente>
+@{
+    ViewBag.Title = MAASoft.HomeBankingWeb.Sitio.Configuracion.Configuracion.AhorroATerminoPesosTitulo;
+
+    string urlExportacion = MAASoft.HomeBankingWeb.Sitio.Helpers.UrlHelper.GenerarUrl(Request.Url.AbsoluteUri, new Dictionary<string, string> { { "exp", true.ToString() } });
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+@using (Html.BeginForm("AhorroATerminoEnPesos", "Home", FormMethod.Get))
+{
+    @Html.ValidationSummary()
+
+    <div class="form-inline form-filtros">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Desde)
+            @Html.TextBoxFor(m => m.Desde, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", size = "10" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Hasta)
+            @Html.TextBoxFor(m => m.Hasta, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", size = "10" })
+        </div>
+        <input type="submit" value="Filtrar" class="btn btn-primary" />
+    </div>
+}
+
+@if (ViewBag.Errores != null)
+{
+    @Html.Partial("_Errores")
+}
+else if (Model.TieneItems)
+{
+    @Html.Partial("_BotonDescargar")
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Fecha)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].FechaVto)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Numero)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Plazo)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].TEM)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].TNA)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Deposito)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Sello)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Estimu)</th>
+                    <th>@Html.DisplayNameFor(m => m.Items[0].Total)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@Formato.FormatoFecha(item.Fecha)</td>
+                        <td>@Formato.FormatoFecha(item.FechaVto)</td>
+                        <td class="text-right">@item.Numero</td>
+                        <td class="text-right">@item.Plazo</td>
+                        <td class="text-right">@Formato.FormatoPorcentaje(item.TEM)</td>
+                        <td class="text-right">@Formato.FormatoPorcentaje(item.TNA)</td>
+                        <td class="text-right">@Formato.FormatoMoneda(item.Deposito)</td>
+                        <td class="text-right">@Formato.FormatoMoneda(item.Sello)</td>
+                        <td class="text-right">@Formato.FormatoMoneda(item.Estimu)</td>
+                        <td class="text-right">@Formato.FormatoMoneda(item.Total)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @Helpers.Paginador(Model.Paginacion, Request.Url.ToString())
+}
+else
+{
+    <div class="alert alert-info">
+        No hay elementos disponibles para mostrar.
+    </div>
+}
+
+@section bodyScripts {
+    <script type="text/javascript">
+    $(function () {
+        configDateTimePicker();
+    });
+    </script>
+}

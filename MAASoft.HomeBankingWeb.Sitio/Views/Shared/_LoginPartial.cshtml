@@ -1,0 +1,31 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Helpers;
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    bool usuarioLogueadoEsSocio = User.IsInRole(RolesNombres.SOCIO);
+    string nombreAMostrar =
+        usuarioLogueadoEsSocio
+        ? SociosHelper.SocioNombreApellidoORazonSocial
+        : User.Identity.GetUserName();
+
+    <div>Bienvenido/a <span class="user-name">@nombreAMostrar</span></div>
+    <div class="account-buttons">
+        @if (usuarioLogueadoEsSocio)
+        {
+            <a href="@Url.Action("MiCuenta", "Home")" class="btn btn-xs btn-default" title="Mi cuenta"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
+        }
+        <div style="display: inline-block">
+            @using (Html.BeginForm("LogOff", "Acceso", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-xs btn-default" title="Cerrar sesión"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <a href="@Url.Action("Login", "Acceso")" class="btn btn-xs btn-default">
+        Iniciar sesión <span class="glyphicon glyphicon-log-in"></span>
+    </a>
+}

@@ -1,0 +1,49 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.ViewModels;
+@model RestablecerContraseñaViewModel
+@{
+    ViewBag.Title = "Restablecer Contraseña";
+}
+
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <h2 class="text-center page-title">@ViewBag.Title</h2>
+        <section>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                @Html.Partial("_Errores")
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-6">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmarPassword, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-6">
+                            @Html.PasswordFor(m => m.ConfirmarPassword, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-6">
+                            <input type="submit" value="Restablecer" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section bodyScripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

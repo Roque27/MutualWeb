@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Restablecer Contraseña";
+}
+
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <h2 class="text-center page-title">@ViewBag.Title</h2>
+        <div class="alert alert-success">
+            <p>Su contraseña fue restablecida correctamente!</p>
+        </div>
+        @Html.ActionLink("Iniciar Sesión", "Login", "Acceso", null, new { @class = "btn btn-primary" })
+    </div>
+</div>

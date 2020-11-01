@@ -1,0 +1,34 @@
+﻿body { padding-bottom: 20px; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.bootstrap-datetimepicker-widget table td span.active,
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover{ background-color: #009CD3 !important; }
+.bootstrap-datetimepicker-widget table td.today:before { border-bottom-color: #009CD3 !important; }
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { color: #009CD3 !important; }
+
+h2.page-title { margin-top: 5px !important; }
+.pagination { margin: 5px 0 !important; }
+
+.form-filtros { margin-bottom: 10px; }
+    .form-filtros label[for] { margin: 0 5px; }
+
+.top-menu { height: 150px; background-color: rgba(0, 0, 0, 0.05); }
+.top-menu-logo { width: 300px; display: block; float: left; margin-left: 20px; line-height: 150px; }
+#userData { margin-top: 60px; padding: 20px; display: block; float: right; color: #333; }
+.user-name { text-transform: uppercase; font-weight: bold; }
+.account-buttons { margin-top: 5px; }
+.right-banner { margin: 10px 5px; max-width: 150px !important; }
+

@@ -1,0 +1,49 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Core;
+@using MAASoft.HomeBankingWeb.Sitio.Models;
+@model IList<DetalleCuotaAyuda>
+@{
+    ViewBag.Title = MAASoft.HomeBankingWeb.Sitio.Configuracion.Configuracion.AyudasEconomicasTitulo + " - Cuotas";
+
+    string urlExportacion = MAASoft.HomeBankingWeb.Sitio.Helpers.UrlHelper.GenerarUrl(Request.Url.AbsoluteUri, new Dictionary<string, string> { { "exp", true.ToString() } });
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+
+<p>
+    <strong>Ayuda:</strong> @Model[0].Ayuda<br />
+    <strong>Tipo:</strong> @Model[0].Moneda
+</p>
+@Html.Partial("_BotonDescargar")
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m[0].FechaVto)</th>
+                <th>@Html.DisplayNameFor(m => m[0].NroCuota)</th>
+                <th>@Html.DisplayNameFor(m => m[0].ValorCuota)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Formato.FormatoFecha(item.FechaVto)</td>
+                    <td class="text-right">@item.NroCuota</td>
+                    <td class="text-right">@item.ValorCuota</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center">
+    <button class="btn btn-default btn-back">Volver</button>
+</div>
+
+@section bodyScripts {
+<script type="text/javascript">
+    $(function () {
+        configBackButtons();
+    });
+</script>    
+}

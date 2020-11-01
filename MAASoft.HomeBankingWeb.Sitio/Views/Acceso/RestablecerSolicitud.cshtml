@@ -1,0 +1,38 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.ViewModels;
+@model RestablecerContraseñaSolicitudViewModel
+@{
+    ViewBag.Title = "Restablecer Contraseña";
+}
+
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <h2 class="text-center page-title">@ViewBag.Title</h2>
+        <p>Para restablecer su contraseña ingrese su email y le enviaremos un correo que le permitirá completar el proceso.</p>
+        <section>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                @Html.Partial("_Errores")
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-6">
+                            <input type="submit" value="Restablecer Contraseña" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section bodyScripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

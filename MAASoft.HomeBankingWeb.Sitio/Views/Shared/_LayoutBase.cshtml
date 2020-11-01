@@ -1,0 +1,30 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Configuracion;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @Configuracion.MutualNombre</title>
+    @Styles.Render(
+        "~/Content/css", 
+        "~/Content/bootstrap.min.css",
+        "~/Content/bootstrap-datetimepicker.min.css")
+    @Scripts.Render(
+        "~/scripts/modernizr-2.6.2.min.js",
+        "~/scripts/respond.min.js"
+        )
+    @RenderSection("headContenido", required: false)
+</head>
+<body>
+    @RenderBody()
+
+    @Scripts.Render(
+        "~/bundles/jquery", 
+        "~/scripts/bootstrap.min.js",
+        "~/scripts/moment.min.js",
+        "~/scripts/moment-locale-es.js",
+        "~/scripts/bootstrap-datetimepicker.min.js",
+        "~/scripts/site.js")
+    @RenderSection("bodyScripts", required: false)
+</body>
+</html>

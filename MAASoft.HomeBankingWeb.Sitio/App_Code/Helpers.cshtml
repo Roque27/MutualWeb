@@ -1,0 +1,51 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Models;
+@using MAASoft.HomeBankingWeb.Sitio.Helpers;
+@helper Paginador(Paginacion paginacion, string urlPaginaBase)
+{
+    const int cantMaxPaginasAMostrar = 7;
+    int cantMediaPaginasAMostrar = (int)Math.Floor((double)cantMaxPaginasAMostrar / 2);
+    if (!paginacion.TieneUnicaPagina)
+    {
+        <nav aria-label="Paginacion">
+            <ul class="pagination">
+                <li class='@(paginacion.TienePaginaAnterior ? "" : "disabled")'>
+                    <a @{if (paginacion.TienePaginaAnterior) { <text> href="@PaginadorHelper.GenerarUrlPagina(urlPaginaBase, paginacion.PaginaAnterior)" </text>   } } aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                @{
+                    int paginaDesde;
+                    int paginaHasta;
+                    if (paginacion.CantTotalPaginas <= cantMaxPaginasAMostrar)
+                    {
+                        paginaDesde = 1;
+                        paginaHasta = paginacion.CantTotalPaginas;
+                    }
+                    else
+                    {
+                        paginaDesde = Math.Max(paginacion.PaginaActual - cantMediaPaginasAMostrar, 1);
+                        paginaHasta = Math.Min(paginaDesde + cantMaxPaginasAMostrar - 1, paginacion.CantTotalPaginas);
+                        paginaDesde = paginaHasta - (cantMaxPaginasAMostrar - 1); // NOTA: para ajustar paginas finales
+                    }
+                    if (paginaDesde - 1 >= 1)
+                    {
+                        <li><a href="@PaginadorHelper.GenerarUrlPagina(urlPaginaBase, paginaDesde - 1)">...</a></li>
+                    }
+                    for (var i = paginaDesde; i <= paginaHasta; i++)
+                    {
+                        <li class='@(paginacion.PaginaActual == i ? "active" : "")'><a href="@PaginadorHelper.GenerarUrlPagina(urlPaginaBase, i)">@i</a></li>
+                    }
+                    if (paginaHasta + 1 <= paginacion.CantTotalPaginas)
+                    {
+                        <li><a href="@PaginadorHelper.GenerarUrlPagina(urlPaginaBase, paginaHasta + 1)">...</a></li>
+                    }
+                }
+                <li class='@(paginacion.TienePaginaSiguiente ? "" : "disabled")'>
+                    <a @{if (paginacion.TienePaginaSiguiente) { <text> href="@PaginadorHelper.GenerarUrlPagina(urlPaginaBase, paginacion.PaginaSiguiente)" </text>   } } aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
+}

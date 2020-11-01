@@ -1,0 +1,67 @@
+﻿@model MAASoft.HomeBankingWeb.Sitio.ViewModels.SocioViewModel
+@{
+    ViewBag.Title = "Alta de Socio";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-4 col-md-offset-3">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.Partial("_Errores")
+            @Html.Partial("_ResultadoOk")
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NombreApellidoORazonSocial, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.NombreApellidoORazonSocial, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NroCuenta, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.NroCuenta, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TipoCuenta, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.TipoCuenta, Model.TiposCuentaSelectList, "Seleccionar...", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdSucursal, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.IdSucursal, Model.SucursalesSelectList, "Seleccionar...", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-4">
+                <input type="submit" value="Agregar" class="btn btn-primary" />
+                <a href="@Url.Action("Index", "Socios")" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
+    </div>
+}
+<div class="text-center">
+    @Html.ActionLink("Volver", "Index", "Socios", null, new { @class = "btn btn-info" })
+</div>
+
+@section bodyScripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

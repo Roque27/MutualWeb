@@ -1,0 +1,40 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Core;
+@using MAASoft.HomeBankingWeb.Sitio.Servicios;
+@model MAASoft.HomeBankingWeb.Sitio.Models.SaldoCajaAhorro
+@{
+    ViewBag.Title = "Resúmen General";
+
+    string urlExportacion = MAASoft.HomeBankingWeb.Sitio.Helpers.UrlHelper.GenerarUrl(Request.Url.AbsoluteUri, new Dictionary<string, string> { { "exp", true.ToString() } });
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+@if (Model != null)
+{
+    @Html.Partial("_BotonDescargar")
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.Tipo)</th>
+                    <th>@Html.DisplayNameFor(m => m.Cuenta)</th>
+                    <th>@Html.DisplayNameFor(m => m.Saldo)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Tipo</td>
+                    <td class="text-right">@Model.Cuenta</td>
+                    <td class="text-right">@Formato.FormatoMoneda(Model.Saldo)</td>
+                    <td class="text-center"><a href="@Url.Action("CajaDeAhorros", "Home")" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-search"></span></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        No posee Caja de ahorros.
+    </div>
+}
