@@ -39,11 +39,14 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
             public const string IMPUESTOS_PENDIENTES = "ObtenerImpuestosPendientes";
         }
 
-        //public class Socio
-        //{
-        //    public const string SOCIO_POR_DNI = "ObtenerSocioPorDNI";
-        //    public const string SOCIO_POR_CUIT = "ObtenerSocioPorCUIT";
-        //}
+        public class Socio
+        {
+            public const string SOCIO_POR_DNI = "ObtenerSocioPorDNI";
+            public const string SOCIO_POR_CUIT = "ObtenerSocioPorCUIT";
+            public const string SOCIO_POR_NOMBRE = "ObtenerSocioPorNombre";
+            public const string SOCIO_POR_NOMBRE_Y_EMAIL = "ObtenerSocioPorNombreYEmail";
+            public const string ACTUALIZAR_SOCIO = "ActualizarSocio";
+        }
 
         public class Servicios
         {

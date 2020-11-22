@@ -10,7 +10,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
 {
     public class SociosRepositorio
     {
-        public IEnumerable<Socio> ObtenerTodos(
+        public IEnumerable<SocioWeb> ObtenerTodos(
             int p, int tamañoPagina,
             out int cantTotalItems,
             string email = null,
@@ -21,7 +21,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
         {
             using (var ctx = new HomeBankingContext())
             {
-                var query = ctx.Socios as IQueryable<Socio>;
+                var query = ctx.Socios as IQueryable<SocioWeb>;
 
                 if (incluirSucursal)
                 {
@@ -58,7 +58,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
             }
         }
 
-        public Socio Obtener(string id,
+        public SocioWeb Obtener(string id,
             bool incluirSucursal = false)
         {
             using (var ctx = new HomeBankingContext())
@@ -70,7 +70,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
             }
         }
 
-        public void Agregar(Socio socio)
+        public void Agregar(SocioWeb socio)
         {
             using (var ctx = new HomeBankingContext())
             {
@@ -79,7 +79,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
             }
         }
 
-        public void Actualizar(Socio socio)
+        public void Actualizar(SocioWeb socio)
         {
             using (var ctx = new HomeBankingContext())
             {
@@ -94,7 +94,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
         {
             using (var ctx = new HomeBankingContext())
             {
-                var entidad = new Socio { Id = id };
+                var entidad = new SocioWeb { Id = id };
                 ctx.Socios.Attach(entidad);
                 ctx.Entry(entidad).State = EntityState.Deleted;
                 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,49 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
         StringLength(30)]
         public string Telefono { get; set; }
 
+        [Display(Name = "Condición frente a IVA"),
+        ReadOnly(true)]
+        public string CondicionIva { get; set; }
+
+        [Display(Name = "Número de Socio"),
+        ReadOnly(true)]
+        public int NumeroSocio { get; set; }
+
+        [Display(Name = "Tipo de Documento"),
+        RegularExpression("CUIT|CUIL|DNI"),
+        StringLength(5)]
+        public string TipoDocumento { get; set; }
+
+        [Display(Name = "Número de Documento"),
+        DefaultValue(0),
+        StringLength(50)]
+        public string NumeroDocumento { get; set; }
+
+        [Display(Name = "Domicilio"),
+        StringLength(200)]
+        public string Domicilio { get; set; }
+
+        [Display(Name = "Localidad"),
+        StringLength(200)]
+        public string Localidad { get; set; }
+
+        [Display(Name = "Código Postal"),
+        StringLength(10)]
+        public string CodPostal { get; set; }
+
+        //[Display(Name = "Provincia"),
+        //ReadOnly(true),
+        //StringLength(200)]
+        //public string Provincia { get; set; }
+
+        [Display(Name = "Número de Celular"),
+        StringLength(50)]
+        public string Celular { get; set; }
+
+        [Display(Name = "Número de Fax"),
+        StringLength(50)]
+        public string Fax { get; set; }
+
         [DataType(DataType.Password),
         Display(Name = "Contraseña actual")]
         public string ContraseñaActual { get; set; }
@@ -33,6 +77,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
         [DataType(DataType.Password),
         Display(Name = "Confirmar contraseña nueva")]
         public string ConfirmarContraseñaNueva { get; set; }
+
+        public bool DatosCompletos { get; set; }
 
         public bool SeDebeActualizarContraseña
         {

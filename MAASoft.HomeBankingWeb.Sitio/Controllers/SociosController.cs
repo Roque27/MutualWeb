@@ -95,7 +95,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                 var identityResultado = UsuariosRepositorio.Agregar(model.Email, out idUsuario);
                 if (identityResultado.Succeeded)
                 {
-                    var socio = new Socio
+                    var socio = new SocioWeb
                     {
                         Id = idUsuario,
                         NombreApellidoORazonSocial = model.NombreApellidoORazonSocial,
@@ -176,7 +176,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             {
                 try
                 {
-                    var socio = new Socio
+                    var socio = new SocioWeb
                     {
                         Id = id,
                         NombreApellidoORazonSocial = model.NombreApellidoORazonSocial,

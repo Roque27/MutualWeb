@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MAASoft.HomeBankingWeb.Sitio.Repositorios.Config
 {
-    public class SocioConfiguration : EntityTypeConfiguration<Socio>
+    public class SocioConfiguration : EntityTypeConfiguration<SocioWeb>
     {
         public SocioConfiguration()
         {

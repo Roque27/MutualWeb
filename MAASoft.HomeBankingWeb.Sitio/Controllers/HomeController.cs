@@ -40,8 +40,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             get { return _usuariosRepositorio ?? (_usuariosRepositorio = new UsuariosRepositorio(this.GetUserManager(), this.GetRoleManager())); }
         }
 
-        private Socio _socio;
-        private Socio Socio
+        private SocioWeb _socio;
+        private SocioWeb Socio
         {
             get
             {
@@ -55,6 +55,12 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
         private ServiciosCliente ServicioCliente
         {
             get { return _servicioCliente ?? (_servicioCliente = new ServiciosCliente(Socio.Sucursal)); }
+        }
+
+        private ServiciosSocios _servicioSocios;
+        private ServiciosSocios ServicioSocio
+        {
+            get { return _servicioSocios ?? (_servicioSocios = new ServiciosSocios(Socio.Sucursal)); }
         }
 
         private int CantMaxMesesDetalleCajaAhorros
@@ -88,8 +94,23 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             {
                 Email = User.Identity.GetUserName(),
                 NombreApellidoORazonSocial = Socio.NombreApellidoORazonSocial,
-                Telefono = Socio.Telefono
+                Telefono = Socio.Telefono,
+                DatosCompletos = false,
             };
+
+            Socio _socio = ServicioSocio.ObtenerDatosDelSocio(modelo.NombreApellidoORazonSocial, modelo.Email);
+            if(_socio != null)
+            {
+                modelo.NumeroSocio = _socio.Codigo;
+                modelo.Telefono = _socio.Telefono;
+                modelo.TipoDocumento = _socio.TipoDocumento;
+                modelo.NumeroDocumento = _socio.NroDocumento.ToString();
+                modelo.Domicilio = _socio.Domicilio;
+                modelo.Localidad = _socio.Localidad;
+                modelo.CodPostal = _socio.CodPostal;
+                modelo.Telefono = (_socio.Telefono.Trim().Equals(String.Empty) ? modelo.Telefono : _socio.Telefono);
+                modelo.Celular = _socio.Celular;
+            }
 
             return View(modelo);
         }
@@ -115,6 +136,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
 
                 if (!hayError)
                 {
+                    // En la web
                     var socio = Socio;
                     socio.NombreApellidoORazonSocial = modelo.NombreApellidoORazonSocial;
                     socio.Telefono = modelo.Telefono;
@@ -122,6 +144,23 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                     SociosRepositorio.Actualizar(socio);
 
                     SociosHelper.SocioNombreApellidoORazonSocial = socio.NombreApellidoORazonSocial;
+
+                    // En Sucursal
+                    var _socio = new Socio()
+                    {
+                        Codigo = modelo.NumeroSocio,
+                        Nombre = modelo.NombreApellidoORazonSocial,
+                        Domicilio = modelo.Domicilio,
+                        Localidad = modelo.Localidad,
+                        CodPostal = modelo.CodPostal,
+                        Telefono = modelo.Telefono,
+                        Fax = modelo.Fax,
+                        Celular = modelo.Celular,
+                        Email = modelo.Email,
+                        TipoDocumento = modelo.TipoDocumento,
+                        NroDocumento = Convert.ToInt64(modelo.NumeroDocumento),
+                    };
+                    var respuesta = ServicioSocio.ActualizarDatosDelSocio(_socio);
 
                     ControllerHelper.CargarResultadoOk("Sus datos fueron actualizados correctamente!");
                 }

@@ -17,7 +17,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Repositorios
             modelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
         }
 
-        public DbSet<Socio> Socios { get; set; }
+        public DbSet<SocioWeb> Socios { get; set; }
 
         public DbSet<Sucursal> Sucursales { get; set; }
     }

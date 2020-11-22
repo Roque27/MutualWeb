@@ -12,7 +12,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
         public const string CUOTAS_SOCIETARIAS = "CuotasSocietarias";
         public const string FACTURACION = "Facturacion";
         public const string IMPUESTOS = "Impuestos";
-        //public const string SOCIOS = "Socios";
+        public const string SOCIOS = "Socios";
         public const string SERVICIOS = "Servicios";
     }
 }
