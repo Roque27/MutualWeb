@@ -85,8 +85,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
             get
             {
                 return !String.IsNullOrWhiteSpace(ContraseñaActual)
-                    || !String.IsNullOrWhiteSpace(ContraseñaNueva) 
-                    || !String.IsNullOrWhiteSpace(ConfirmarContraseñaNueva);
+                    && (!String.IsNullOrWhiteSpace(ContraseñaNueva) 
+                    && !String.IsNullOrWhiteSpace(ConfirmarContraseñaNueva));
             }
         }
 
@@ -99,16 +99,17 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
                     yield return new ValidationResult("La contraseña actual es requerida.", new string[] { "ContraseñaActual" });
                 }
 
-                if (String.IsNullOrWhiteSpace(ContraseñaNueva))
+                if (String.IsNullOrWhiteSpace(ContraseñaNueva) && !String.IsNullOrWhiteSpace(ConfirmarContraseñaNueva))
                 {
                     yield return new ValidationResult("La contraseña nueva es requerida.", new string[] { "ContraseñaNueva" });
                 }
 
-                if (String.IsNullOrWhiteSpace(ConfirmarContraseñaNueva))
+                if (String.IsNullOrWhiteSpace(ConfirmarContraseñaNueva) && !String.IsNullOrWhiteSpace(ContraseñaNueva))
                 {
                     yield return new ValidationResult("Debe confirmar la contraseña nueva.", new string[] { "ConfirmarContraseñaNueva" });
                 }
-                else
+                
+                if(!String.IsNullOrWhiteSpace(ConfirmarContraseñaNueva) && !String.IsNullOrWhiteSpace(ContraseñaNueva))
                 {
                     if (ContraseñaNueva != ConfirmarContraseñaNueva)
                     {

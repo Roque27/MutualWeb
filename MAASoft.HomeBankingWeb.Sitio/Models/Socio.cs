@@ -5,7 +5,6 @@ using System.Web;
 
 namespace MAASoft.HomeBankingWeb.Sitio.Models
 {
-    [Serializable]
     public class Socio
     {
         public int Codigo { get; set; }

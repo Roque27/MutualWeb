@@ -162,7 +162,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                     };
                     var respuesta = ServicioSocio.ActualizarDatosDelSocio(_socio);
 
-                    ControllerHelper.CargarResultadoOk("Sus datos fueron actualizados correctamente!");
+                    ControllerHelper.CargarResultadoOk("Sus datos" + (modelo.SeDebeActualizarContraseña ? " y su contraseña" : String.Empty) + " fueron actualizados correctamente!");
                 }
             }
 
