@@ -8,8 +8,12 @@ namespace MAASoft.HomeBankingWeb.Sitio.Models
 {
     public class SaldoCajaAhorro
     {
-        [Display(Name = "Tipo de Cuenta")]
         public string Tipo { get; set; }
+
+        public string TipoAMV { get; set; }
+
+        [Display(Name = "Tipo de Cuenta")]
+        public string TipoDesc { get; set; }
 
         [Display(Name = "Nro. de Cuenta")]
         public long Cuenta { get; set; }

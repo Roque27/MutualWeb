@@ -84,6 +84,13 @@ namespace MAASoft.HomeBankingWeb.Sitio.Helpers
                 "Resúmen General", new List<SaldoCajaAhorro> { datos });
         }
 
+        public static FileResult GenerarReporteResumenPdfFileResult(
+           List<SaldoCajaAhorro> datos)
+        {
+            return GenerarReportePdfFileResult("Resumen",
+                "Resúmen General", datos);
+        }
+
         public static FileResult GenerarReporteValoresAlCobroPdfFileResult(
            IEnumerable<DetalleValorCobroAcreditacion> datos)
         {

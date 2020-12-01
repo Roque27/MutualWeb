@@ -129,14 +129,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Tipo">
+                    <Textbox Name="TipoDesc">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Tipo.Value</Value>
+                              <Value>=Fields!TipoDesc.Value</Value>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
                               </Style>
@@ -145,7 +145,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Tipo</rd:DefaultName>
+                      <rd:DefaultName>TipoDesc</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#dddddd</Color>
@@ -157,6 +157,7 @@
                         <PaddingBottom>4pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -499,6 +500,14 @@
         </Field>
         <Field Name="Tipo">
           <DataField>Tipo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TipoAMV">
+          <DataField>TipoAMV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TipoDesc">
+          <DataField>TipoDesc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

@@ -176,36 +176,37 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             bool exp = false,
             string f = null)
         {
-            SaldoCajaAhorro saldo = null;
+            List<SaldoCajaAhorro> saldos = new List<SaldoCajaAhorro>();
 
             try
             {
-                saldo = ServicioCliente.ObtenerSaldoCajaDeAhorro(Socio.NroCuenta, Socio.TipoCuentaAbreviado);
+                //saldo = ServicioCliente.ObtenerSaldoCajaDeAhorro(Socio.NroCuenta, Socio.TipoCuentaAbreviado);
+                saldos = ServicioCliente.ObtenerSaldosCajaDeAhorro(Socio.NombreApellidoORazonSocial, User.Identity.GetUserName()).ToList();
             }
             catch (Exception)
             {
                 // NOTA: si no pude obtener el saldo asumimos que el socio no posee una Caja de ahorros
             }
 
-            if (saldo != null)
+            if (saldos != null && saldos.Count > 0)
             {
-                saldo.Tipo = String.Format("{0} $ ({1})", Configuracion.Configuracion.CajaAhorrosTitulo, ServiciosTiposCuentaCodigos.ObtenerNombreDesdeCodigo(saldo.Tipo));
+                saldos.ForEach(s => s.TipoDesc = String.Format("{0} $ ({1})", Configuracion.Configuracion.CajaAhorrosTitulo, ServiciosTiposCuentaCodigos.ObtenerNombreDesdeCodigo(s.Tipo), s.TipoAMV = "AMV"+s.Tipo));
 
                 if (exp)
                 {
                     switch (f)
                     {
                         case Formato.ARCHIVO_FORMATO_PDF:
-                            return ReportesPdfHelper.GenerarReporteResumenPdfFileResult(saldo);
+                            return ReportesPdfHelper.GenerarReporteResumenPdfFileResult(saldos);
 
                         case Formato.ARCHIVO_FORMATO_EXCEL:
                         default:
-                            return ReportesExcelHelper.GenerarActionResultExcelResumen(saldo);
+                            return ReportesExcelHelper.GenerarActionResultExcelResumen(saldos);
                     }
                 }
             }
 
-            return View(saldo);
+            return View(saldos);
         }
 
         [Authorize(Roles = RolesNombres.SOCIO),

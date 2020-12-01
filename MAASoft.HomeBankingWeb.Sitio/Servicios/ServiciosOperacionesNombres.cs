@@ -10,6 +10,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
         public class Ahorros
         {
             public const string SALDO_CAJA_DE_AHORRO = "ObtenerSaldoCajaDeAhorro";
+            public const string SALDOS_CAJAS_DE_AHORROS = "ObtenerSaldosCajaDeAhorroPorSocio";
             public const string RESUMEN_CUENTAS_SOCIOS = "ResumenCuentasSocios";
             public const string AHORROS_A_TERMINO_VIGENTES = "ObtenerAhorrosATerminoVigentes";
             public const string DETALLE_DE_VALORES_AL_COBRO_DE_ACREDITACION = "DetalleDeValoresAlCobroDeAcreditacion";

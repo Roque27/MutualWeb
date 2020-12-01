@@ -20,7 +20,21 @@ namespace MAASoft.HomeBankingWeb.Sitio.Helpers
                 mapeoItemValores:
                     (item) => new object[]
                     {
-                        item.Tipo,
+                        item.TipoDesc,
+                        item.Cuenta,
+                        item.Saldo,
+                    });
+        }
+
+        public static ActionResult GenerarActionResultExcelResumen(List<SaldoCajaAhorro> saldos)
+        {
+            return ReportesExcelHelper.GenerarReporteExcelFileResult(
+                saldos, "Resúmen General",
+                encabezados: new string[] { "Tipo Cuenta", "Nro. Cuenta", "Saldo" },
+                mapeoItemValores:
+                    (item) => new object[]
+                    {
+                        item.TipoDesc,
                         item.Cuenta,
                         item.Saldo,
                     });
