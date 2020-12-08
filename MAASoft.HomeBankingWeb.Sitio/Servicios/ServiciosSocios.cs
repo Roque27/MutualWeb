@@ -40,6 +40,17 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
                 });
         }
 
+        public Socio ObtenerDatosDelSocio(
+            string nrocuentasocio)
+        {
+            return ObtenerRespuesta<Socio>(
+                servicio: ServiciosNombres.SOCIOS,
+                operacion: ServiciosOperacionesNombres.Socio.SOCIO_POR_NRO_SOCIO,
+                parametros: new Dictionary<string, string> {
+                    { "nrosocio", nrocuentasocio }
+                });
+        }
+
         public Socio ActualizarDatosDelSocio(
             Socio socio)
         {

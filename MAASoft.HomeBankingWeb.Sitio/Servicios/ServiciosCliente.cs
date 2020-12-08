@@ -51,6 +51,17 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
                 });
         }
 
+        public IEnumerable<SaldoCajaAhorro> ObtenerSaldosCajaDeAhorro(
+            string nrocuentasocio)
+        {
+            return ObtenerRespuesta<IEnumerable<SaldoCajaAhorro>>(
+                servicio: ServiciosNombres.AHORROS,
+                operacion: ServiciosOperacionesNombres.Ahorros.SALDOS_CAJAS_DE_AHORROS_SOCIO,
+                parametros: new Dictionary<string, string> {
+                    { "nrosocio", nrocuentasocio }
+                });
+        }
+
         public IEnumerable<ResumenCuenta> ObtenerDetalleCajaDeAhorro(
             string nroCuenta, string tipoCuenta, DateTime? desde, DateTime hasta)
         {

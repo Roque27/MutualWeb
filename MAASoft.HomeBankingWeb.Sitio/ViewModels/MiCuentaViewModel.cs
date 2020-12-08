@@ -23,13 +23,11 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
         StringLength(30)]
         public string Telefono { get; set; }
 
-        [Display(Name = "Condición frente a IVA"),
-        ReadOnly(true)]
+        [Display(Name = "Condición frente a IVA")]
         public string CondicionIva { get; set; }
 
-        [Display(Name = "Número de Socio"),
-        ReadOnly(true)]
-        public int NumeroSocio { get; set; }
+        [Display(Name = "Número de Socio")]
+        public string NumeroSocio { get; set; }
 
         [Display(Name = "Tipo de Documento"),
         RegularExpression("CUIT|CUIL|DNI"),

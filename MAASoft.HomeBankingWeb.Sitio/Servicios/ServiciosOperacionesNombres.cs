@@ -11,6 +11,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
         {
             public const string SALDO_CAJA_DE_AHORRO = "ObtenerSaldoCajaDeAhorro";
             public const string SALDOS_CAJAS_DE_AHORROS = "ObtenerSaldosCajaDeAhorroPorSocio";
+            public const string SALDOS_CAJAS_DE_AHORROS_SOCIO = "ObtenerSaldosCajaDeAhorroPorNroSocio";
             public const string RESUMEN_CUENTAS_SOCIOS = "ResumenCuentasSocios";
             public const string AHORROS_A_TERMINO_VIGENTES = "ObtenerAhorrosATerminoVigentes";
             public const string DETALLE_DE_VALORES_AL_COBRO_DE_ACREDITACION = "DetalleDeValoresAlCobroDeAcreditacion";
@@ -46,6 +47,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Servicios
             public const string SOCIO_POR_CUIT = "ObtenerSocioPorCUIT";
             public const string SOCIO_POR_NOMBRE = "ObtenerSocioPorNombre";
             public const string SOCIO_POR_NOMBRE_Y_EMAIL = "ObtenerSocioPorNombreYEmail";
+            public const string SOCIO_POR_NRO_SOCIO = "ObtenerSocioPorNroSocio";
             public const string ACTUALIZAR_SOCIO = "ActualizarSocio";
         }
 

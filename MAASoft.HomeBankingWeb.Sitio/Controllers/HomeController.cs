@@ -98,10 +98,10 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                 DatosCompletos = false,
             };
 
-            Socio _socio = ServicioSocio.ObtenerDatosDelSocio(modelo.NombreApellidoORazonSocial, modelo.Email);
+            Socio _socio = ServicioSocio.ObtenerDatosDelSocio(Socio.NroCuenta);
             if(_socio != null)
             {
-                modelo.NumeroSocio = _socio.Codigo;
+                modelo.NumeroSocio = _socio.Codigo.ToString();
                 modelo.Telefono = _socio.Telefono;
                 modelo.TipoDocumento = _socio.TipoDocumento;
                 modelo.NumeroDocumento = _socio.NroDocumento.ToString();
@@ -148,7 +148,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                     // En Sucursal
                     var _socio = new Socio()
                     {
-                        Codigo = modelo.NumeroSocio,
+                        Codigo = Convert.ToInt32(modelo.NumeroSocio),
                         Nombre = modelo.NombreApellidoORazonSocial,
                         Domicilio = modelo.Domicilio,
                         Localidad = modelo.Localidad,
@@ -181,7 +181,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             try
             {
                 //saldo = ServicioCliente.ObtenerSaldoCajaDeAhorro(Socio.NroCuenta, Socio.TipoCuentaAbreviado);
-                saldos = ServicioCliente.ObtenerSaldosCajaDeAhorro(Socio.NombreApellidoORazonSocial, User.Identity.GetUserName()).ToList();
+                saldos = ServicioCliente.ObtenerSaldosCajaDeAhorro(Socio.NroCuenta).ToList();
             }
             catch (Exception)
             {
