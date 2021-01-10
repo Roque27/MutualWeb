@@ -29,7 +29,6 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
         public string NroCuenta { get; set; }
 
         [Display(Name = "Tipo Cuenta"),
-        Required,
         StringLength(4)]
         public string TipoCuenta { get; set; }
 
