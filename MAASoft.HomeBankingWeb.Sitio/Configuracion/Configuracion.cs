@@ -28,6 +28,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.Configuracion
         public static bool ValoresAlCobroHabilitado { get { return (bool)Application[GenerarApplicationKeyModuloHabilitado(ModuloNombres.VALORES_AL_COBRO)]; } }
         public static bool ValoresNegociadosHabilitado { get { return (bool)Application[GenerarApplicationKeyModuloHabilitado(ModuloNombres.VALORES_NEGOCIADOS)]; } }
         public static bool ServiciosCuotasHabilitado { get { return (bool)Application[GenerarApplicationKeyModuloHabilitado(ModuloNombres.SERVICIOS_CUOTAS)]; } }
+        public static bool CargaDeTramitesHabilitado { get { return (bool)Application[GenerarApplicationKeyModuloHabilitado(ModuloNombres.CARGA_TRAMITES)]; } }
+        public static bool TransferenciasHabilitado { get { return (bool)Application[GenerarApplicationKeyModuloHabilitado(ModuloNombres.TRANSFERENCIAS)]; } }
 
         public static string CajaAhorrosTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.CAJA_AHORROS)]; } }
         public static string AhorroATerminoPesosTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.AHORRO_A_TERMINO_PESOS)]; } }
@@ -38,6 +40,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.Configuracion
         public static string ValoresAlCobroTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.VALORES_AL_COBRO)]; } }
         public static string ValoresNegociadosTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.VALORES_NEGOCIADOS)]; } }
         public static string ServiciosCuotasTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.SERVICIOS_CUOTAS)]; } }
+        public static string CargaDeTramitesTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.CARGA_TRAMITES)]; } }
+        public static string TransferenciasTitulo { get { return (string)Application[GenerarApplicationKeyTitulo(ModuloNombres.TRANSFERENCIAS)]; } }
 
         private static HttpApplicationState Application { get { return HttpContext.Current.Application; } }
 
@@ -56,6 +60,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.Configuracion
             InicializarConfiguracion(GenerarApplicationKeyTitulo(ModuloNombres.VALORES_AL_COBRO));
             InicializarConfiguracion(GenerarApplicationKeyTitulo(ModuloNombres.VALORES_NEGOCIADOS));
             InicializarConfiguracion(GenerarApplicationKeyTitulo(ModuloNombres.SERVICIOS_CUOTAS));
+            InicializarConfiguracion(GenerarApplicationKeyTitulo(ModuloNombres.CARGA_TRAMITES));
+            InicializarConfiguracion(GenerarApplicationKeyTitulo(ModuloNombres.TRANSFERENCIAS));
 
             InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.CAJA_AHORROS), bool.Parse);
             InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.AHORRO_A_TERMINO_PESOS), bool.Parse);
@@ -66,6 +72,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.Configuracion
             InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.VALORES_AL_COBRO), bool.Parse);
             InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.VALORES_NEGOCIADOS), bool.Parse);
             InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.SERVICIOS_CUOTAS), bool.Parse);
+            InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.CARGA_TRAMITES), bool.Parse);
+            InicializarConfiguracion(GenerarApplicationKeyModuloHabilitado(ModuloNombres.TRANSFERENCIAS), bool.Parse);
         }
 
         public static bool ElModuloEstaHabilitado(string nombre)

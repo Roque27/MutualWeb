@@ -15,6 +15,8 @@ using MAASoft.HomeBankingWeb.Sitio.Repositorios;
 using MAASoft.HomeBankingWeb.Sitio.Servicios;
 using MAASoft.HomeBankingWeb.Sitio.ViewModels;
 using MAASoft.HomeBankingWeb.Sitio.Configuracion;
+using System.Web;
+using System.IO;
 
 namespace MAASoft.HomeBankingWeb.Sitio.Controllers
 {
@@ -668,6 +670,52 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             {
                 return View(viewModel);
             }
+        }
+
+        [Authorize(Roles = RolesNombres.SOCIO),
+        ValidarSocio,
+        ValidarModuloHabilitado(ModuloNombres.CARGA_TRAMITES)]
+        public ActionResult CargaDeTramites()
+        {
+            var viewModel = new CargaDeTramitesViewModel
+            {
+            };
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CargaDeTramites(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/DocumentosSubidos"),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    ViewBag.Message = "Arhivo subido exitosamente.";
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
+            {
+                ViewBag.Message = "No ha especificado un archivo.";
+            }
+            return View();
+        }
+
+        [Authorize(Roles = RolesNombres.SOCIO),
+        ValidarSocio,
+        ValidarModuloHabilitado(ModuloNombres.TRANSFERENCIAS)]
+        public ActionResult Transferencias()
+        {
+            var viewModel = new TransferenciaViewModel
+            {
+            };
+
+            return View();
         }
 
         #endregion

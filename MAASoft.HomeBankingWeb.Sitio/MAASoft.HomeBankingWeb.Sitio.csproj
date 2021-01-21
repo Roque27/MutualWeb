@@ -256,6 +256,7 @@
     <Compile Include="Servicios\ServiciosOperacionesNombres.cs" />
     <Compile Include="Servicios\ServiciosTiposCuentaCodigos.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CargaDeTramitesViewModel.cs" />
     <Compile Include="ViewModels\ServiciosCuotasViewModel.cs" />
     <Compile Include="ViewModels\AhorroATerminoVigenteViewModel.cs" />
     <Compile Include="ViewModels\DetalleCajaDeAhorrosViewModel.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="ViewModels\MiCuentaViewModel.cs" />
     <Compile Include="ViewModels\SocioViewModel.cs" />
     <Compile Include="ViewModels\SociosViewModel.cs" />
+    <Compile Include="ViewModels\TransferenciaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
@@ -345,9 +347,12 @@
     <Content Include="Views\Home\AhorroATerminoEnPesos.cshtml" />
     <Content Include="Views\Shared\_BotonDescargar.cshtml" />
     <Content Include="Views\Home\ServiciosCuotas.cshtml" />
+    <Content Include="Views\Home\CargaDeTramites.cshtml" />
+    <Content Include="Views\Home\Transferencias.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DocumentosSubidos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

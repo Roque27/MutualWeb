@@ -27,39 +27,47 @@
                     <a class="list-group-item active">DETALLE DE SALDOS</a>
                     @if (Configuracion.CajaAhorrosHabilitado)
                     {
-                    <a href="@Url.Action("CajaDeAhorros", "Home")" class="list-group-item">@Configuracion.CajaAhorrosTitulo</a>
+                        <a href="@Url.Action("CajaDeAhorros", "Home")" class="list-group-item">@Configuracion.CajaAhorrosTitulo</a>
                     }
                     @if (Configuracion.AhorroATerminoPesosHabilitado)
                     {
-                    <a href="@Url.Action("AhorroATerminoEnPesos", "Home")" class="list-group-item">@Configuracion.AhorroATerminoPesosTitulo</a>
+                        <a href="@Url.Action("AhorroATerminoEnPesos", "Home")" class="list-group-item">@Configuracion.AhorroATerminoPesosTitulo</a>
                     }
                     @if (Configuracion.AhorroATerminoDolaresHabilitado)
                     {
-                    <a href="@Url.Action("AhorroATerminoEnDolares", "Home")" class="list-group-item">@Configuracion.AhorroATerminoDolaresTitulo</a>
+                        <a href="@Url.Action("AhorroATerminoEnDolares", "Home")" class="list-group-item">@Configuracion.AhorroATerminoDolaresTitulo</a>
                     }
                     @if (Configuracion.CuotasSocietariasHabilitado)
                     {
-                    <a href="@Url.Action("CuotasSocietarias", "Home")" class="list-group-item">@Configuracion.CuotasSocietariasTitulo</a>
+                        <a href="@Url.Action("CuotasSocietarias", "Home")" class="list-group-item">@Configuracion.CuotasSocietariasTitulo</a>
                     }
                     @if (Configuracion.AyudasEconomicasHabilitado)
                     {
-                    <a href="@Url.Action("AyudasEconomicas", "Home")" class="list-group-item">@Configuracion.AyudasEconomicasTitulo</a>
+                        <a href="@Url.Action("AyudasEconomicas", "Home")" class="list-group-item">@Configuracion.AyudasEconomicasTitulo</a>
                     }
                     @if (Configuracion.ImpuestosHabilitado)
                     {
-                    <a href="@Url.Action("Impuestos", "Home")" class="list-group-item">@Configuracion.ImpuestosTitulo</a>
+                        <a href="@Url.Action("Impuestos", "Home")" class="list-group-item">@Configuracion.ImpuestosTitulo</a>
                     }
                     @if (Configuracion.ValoresAlCobroHabilitado)
                     {
-                    <a href="@Url.Action("ValoresAlCobro", "Home")" class="list-group-item">@Configuracion.ValoresAlCobroTitulo</a>
+                        <a href="@Url.Action("ValoresAlCobro", "Home")" class="list-group-item">@Configuracion.ValoresAlCobroTitulo</a>
                     }
                     @if (Configuracion.ValoresNegociadosHabilitado)
                     {
-                    <a href="@Url.Action("ValoresNegociados", "Home")" class="list-group-item">@Configuracion.ValoresNegociadosTitulo</a>
+                        <a href="@Url.Action("ValoresNegociados", "Home")" class="list-group-item">@Configuracion.ValoresNegociadosTitulo</a>
                     }
                     @if (Configuracion.ServiciosCuotasHabilitado)
                     {
                         <a href="@Url.Action("ServiciosCuotas", "Home")" class="list-group-item">@Configuracion.ServiciosCuotasTitulo</a>
+                    }
+                    @if (Configuracion.CargaDeTramitesHabilitado)
+                    {
+                        <a href="@Url.Action("CargaDeTramites", "Home")" class="list-group-item">@Configuracion.CargaDeTramitesTitulo</a>
+                    }
+                    @if (Configuracion.TransferenciasHabilitado)
+                    {
+                        <a href="@Url.Action("Transferencias", "Home")" class="list-group-item">@Configuracion.TransferenciasTitulo</a>
                     }
                 </div>
             </div>

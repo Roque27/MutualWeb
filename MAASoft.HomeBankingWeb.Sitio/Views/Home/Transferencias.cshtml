@@ -1,0 +1,19 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Core;
+@{
+    ViewBag.Title = MAASoft.HomeBankingWeb.Sitio.Configuracion.Configuracion.TransferenciasTitulo;
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+
+@if (ViewBag.Errores != null)
+{
+    @Html.Partial("_Errores")
+}
+
+@section bodyScripts {
+    <script type="text/javascript">
+        $(function () {
+            configDateTimePicker();
+        });
+    </script>
+}

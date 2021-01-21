@@ -1,0 +1,39 @@
+﻿@using MAASoft.HomeBankingWeb.Sitio.Core;
+@model MAASoft.HomeBankingWeb.Sitio.ViewModels.CargaDeTramitesViewModel
+@{
+    ViewBag.Title = MAASoft.HomeBankingWeb.Sitio.Configuracion.Configuracion.CargaDeTramitesTitulo;
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+
+<h2>SUBIR DOCUMENTOS</h2>
+@using (Html.BeginForm("CargaDeTramites",
+                        "Home",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Subir Documento:</label>
+    <input type="file" name="file" id="file" />
+    <br>
+    <br>
+
+    <input type="submit" value="Subir documento" />
+
+    <br>
+    <br>
+
+    @ViewBag.Message
+}
+
+@if (ViewBag.Errores != null)
+{
+    @Html.Partial("_Errores")
+}
+
+@section bodyScripts {
+    <script type="text/javascript">
+        $(function () {
+            configDateTimePicker();
+        });
+    </script>
+}

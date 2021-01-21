@@ -16,5 +16,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Configuracion
         public const string VALORES_AL_COBRO = "ValoresAlCobro";
         public const string VALORES_NEGOCIADOS = "ValoresNegociados";
         public const string SERVICIOS_CUOTAS = "ServiciosCuotas";
+        public const string CARGA_TRAMITES = "CargaDeTramites";
+        public const string TRANSFERENCIAS = "Transferencias";
     }
 }
