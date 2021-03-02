@@ -5,24 +5,55 @@
 }
 
 <h2 class="page-title">@ViewBag.Title</h2>
-
-<h2>SUBIR DOCUMENTOS</h2>
-@using (Html.BeginForm("CargaDeTramites",
-                        "Home",
-                        FormMethod.Post,
-                        new { enctype = "multipart/form-data" }))
+<br />
+@using (Html.BeginForm("CargaDeTramites", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <label for="file">Subir Documento:</label>
-    <input type="file" name="file" id="file" />
-    <br>
-    <br>
+    <br />
 
-    <input type="submit" value="Subir documento" />
+    <label class="form-label" for="filesText">Cargue su Documento:</label>
+    <br />
+    @*<input class="form-control" type="text" id="filesText" inputmode="" name="name" value="" style="width:60%; height:70px;" />*@
+    <input class="imputClass" type="file" name="files" id="file1" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+    <input class="imputClass" type="file" name="files" id="file2" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+    <input class="imputClass" type="file" name="files" id="file3" accept=".pdf,.doc,.docx,.xls,.xlsx" />
 
-    <br>
-    <br>
+    <br />
+    <br />
+
+    <input type="submit" value="Subir documentos" />
+
+    <br />
+    <br />
 
     @ViewBag.Message
+
+    <br />
+
+}
+@using (Html.BeginForm("CargaDeTramites", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <h2>Lista de documentos del Usuario:</h2>
+
+    <table class="table">
+        <tr>
+            <th>Nombre del Archivo</th>
+            <th></th>
+            <th></th>
+        </tr>
+            @for (var i = 0; i <= Model.Archivos.Count - 1; i++)
+            {
+                <tr>
+                    <td>@Model.Archivos[i].ToString() </td>
+                    <td>@Html.ActionLink("Descargar", "Descargar", new { FileName = @Model.Archivos[i].ToString() }) </td>
+                    <td></td>
+                    <td>@*<a href="@Url.Action("Borrar", "Home", new { FileName = @Model.Archivos[i].ToString() })">Eliminar</a>*@
+                    @Html.ActionLink("Eliminar", "Borrar", new { FileName = @Model.Archivos[i].ToString() },
+                    new { onclick = "return confirm('Seguro que desea eliminar el archivo?');" })
+                    </td>
+                </tr>
+            }
+    </table>
 }
 
 @if (ViewBag.Errores != null)
@@ -30,10 +61,63 @@
     @Html.Partial("_Errores")
 }
 
+@section headContenido {
+    <style type="text/css">
+        .imputClass {
+            padding-top: 8px;
+        }
+
+        input[type=submit] {
+            width: 18em;
+            height: 2em;
+        }
+    </style>
+}
+
 @section bodyScripts {
     <script type="text/javascript">
         $(function () {
             configDateTimePicker();
         });
+
+        // ---------------------------------------------------------------------------------------- //
+
+        /* 1MB = 1048576 */
+        // Se setea el maximo tamaño de archivo a 10 MB
+        var _filesize = 10485760
+
+        var uploadField1 = document.getElementById("file1");
+        var uploadField2 = document.getElementById("file2");
+        var uploadField3 = document.getElementById("file3");
+
+        uploadField1.onchange = function () {
+            if (this.files[0].size > _filesize) {
+                alert("El tamaño del archivo es muy grande!");
+                this.value = "";
+            };
+        };
+        uploadField2.onchange = function () {
+            if (this.files[0].size > _filesize) {
+                alert("El tamaño del archivo es muy grande!");
+                this.value = "";
+            };
+        };
+        uploadField3.onchange = function () {
+            if (this.files[0].size > _filesize) {
+                alert("El tamaño del archivo es muy grande!");
+                this.value = "";
+            };
+        };
+
+        // ---------------------------------------------------------------------------------------- //
+
+        @*function ConfirmarEliminar(val)
+        {
+            if (confirm('Seguro que desea eliminar el documento?')) {
+                  window.location.href = "@Url.Action("Download", "Home", new { FileName = val })";
+
+            };
+        };*@
+
     </script>
 }

@@ -7,5 +7,11 @@ namespace MAASoft.HomeBankingWeb.Sitio.ViewModels
 {
     public class CargaDeTramitesViewModel
     {
+        public List<string> Archivos { get; set; }
+        
+        public CargaDeTramitesViewModel()
+        {
+            this.Archivos = new List<string>();
+        }
     }
 }

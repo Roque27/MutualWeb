@@ -22,8 +22,18 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
 {
     public class HomeController : Controller
     {
+        #region Propiedades
+
         private const int CANT_ITEMS_POR_PAGINA = 20;
-        
+        private int CantMaxMesesDetalleCajaAhorros
+        {
+            get { return int.Parse(ConfigurationManager.AppSettings["CantMaxMesesDetalleCajaAhorros"]); }
+        }
+
+        #endregion
+
+        #region Servicios
+
         private ControllerHelper _controllerHelper;
         private ControllerHelper ControllerHelper
         {
@@ -50,7 +60,8 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                 return
                     this.User.Identity.IsAuthenticated
                     ? _socio ?? (_socio = SociosRepositorio.Obtener(this.User.Identity.GetUserId(), incluirSucursal: true))
-                    : null; }
+                    : null;
+            }
         }
 
         private ServiciosCliente _servicioCliente;
@@ -65,10 +76,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             get { return _servicioSocios ?? (_servicioSocios = new ServiciosSocios(Socio.Sucursal)); }
         }
 
-        private int CantMaxMesesDetalleCajaAhorros
-        {
-            get { return int.Parse(ConfigurationManager.AppSettings["CantMaxMesesDetalleCajaAhorros"]); }
-        }
+        #endregion
 
         #region Actions
 
@@ -101,7 +109,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             };
 
             Socio _socio = ServicioSocio.ObtenerDatosDelSocio(Socio.NroCuenta);
-            if(_socio != null)
+            if (_socio != null)
             {
                 modelo.NumeroSocio = _socio.Codigo.ToString();
                 modelo.Telefono = _socio.Telefono;
@@ -192,7 +200,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
 
             if (saldos != null && saldos.Count > 0)
             {
-                saldos.ForEach(s => s.TipoDesc = String.Format("{0} $ ({1})", Configuracion.Configuracion.CajaAhorrosTitulo, ServiciosTiposCuentaCodigos.ObtenerNombreDesdeCodigo(s.Tipo), s.TipoAMV = "AMV"+s.Tipo));
+                saldos.ForEach(s => s.TipoDesc = String.Format("{0} $ ({1})", Configuracion.Configuracion.CajaAhorrosTitulo, ServiciosTiposCuentaCodigos.ObtenerNombreDesdeCodigo(s.Tipo), s.TipoAMV = "AMV" + s.Tipo));
 
                 if (exp)
                 {
@@ -657,7 +665,7 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
                 switch (f)
                 {
                     case Formato.ARCHIVO_FORMATO_PDF:
-                        return ReportesPdfHelper.GenerarReporteServiciosCuotasPdfFileResult(viewModel.Items, 
+                        return ReportesPdfHelper.GenerarReporteServiciosCuotasPdfFileResult(viewModel.Items,
                             viewModel.CuotasPendientes, viewModel.CuotasImpagas, viewModel.CuotasPagas, viewModel.TotalPagado);
 
                     case Formato.ARCHIVO_FORMATO_EXCEL:
@@ -678,32 +686,50 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
         public ActionResult CargaDeTramites()
         {
             var viewModel = new CargaDeTramitesViewModel
-            {
+            { 
+                Archivos = GetFiles()
             };
 
-            return View();
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult CargaDeTramites(HttpPostedFileBase file)
+        public ActionResult CargaDeTramites(IEnumerable<HttpPostedFileBase> files)
         {
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    string path = Path.Combine(Server.MapPath("~/DocumentosSubidos"),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                    ViewBag.Message = "Arhivo subido exitosamente.";
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
-            else
+            int count = 0;
+            foreach (var file in files)
             {
-                ViewBag.Message = "No ha especificado un archivo.";
+                if (file != null && file.ContentLength > 0)
+                {
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/DocumentosSubidos"),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                        ViewBag.Message = "Arhivo subido exitosamente.";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                }
+                else
+                {
+                    count++;
+                }
             }
-            return View();
+
+            if(count==3)
+            {
+                ViewBag.Message = "No ha especificado ningun archivo.";
+            }
+
+            var viewModel = new CargaDeTramitesViewModel
+            {
+                Archivos = GetFiles()
+            };
+
+            return View(viewModel);
         }
 
         [Authorize(Roles = RolesNombres.SOCIO),
@@ -977,6 +1003,39 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             {
                 viewModel.CargarItemsYPaginacionDesdeListaCompletaDeItems(items.ToList(), p, CANT_ITEMS_POR_PAGINA);
             }
+        }
+
+        public FileResult Descargar(string FileName)
+        {
+            var FileVirtualPath = "~/DocumentosSubidos/" + FileName;
+            return File(FileVirtualPath, "application/force- download", Path.GetFileName(FileVirtualPath));
+        }
+
+        public ActionResult Borrar(string FileName)
+        {
+            string root = Server.MapPath("/");
+            string downloadFolder = "DocumentosSubidos\\";
+            string authorsFile = FileName;
+            string route = Path.Combine(root, downloadFolder, authorsFile);
+            if (System.IO.File.Exists(route))
+            {  
+                System.IO.File.Delete(Path.Combine(route));
+            }
+            return RedirectToAction("CargaDeTramites", "Home");
+        }
+
+        private List<string> GetFiles()
+        {
+            var dir = new System.IO.DirectoryInfo(Server.MapPath("~/DocumentosSubidos"));
+            System.IO.FileInfo[] fileNames = dir.GetFiles("*.*");
+
+            List<string> items = new List<string>();
+            foreach (var file in fileNames)
+            {
+                items.Add(file.Name);
+            }
+
+            return items;
         }
 
         #endregion
