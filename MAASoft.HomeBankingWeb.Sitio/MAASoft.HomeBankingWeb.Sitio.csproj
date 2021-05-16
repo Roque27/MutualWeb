@@ -200,6 +200,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Core\Tipos\RangoFechas.cs" />
     <Compile Include="Filters\ValidarModuloHabilitadoAttribute.cs" />
+    <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\ReportesExcelHelper.cs" />
     <Compile Include="Filters\HandleErrorAttributeWithLog.cs" />
     <Compile Include="Filters\ValidarSocioAttribute.cs" />
@@ -349,6 +350,7 @@
     <Content Include="Views\Home\ServiciosCuotas.cshtml" />
     <Content Include="Views\Home\CargaDeTramites.cshtml" />
     <Content Include="Views\Home\Transferencias.cshtml" />
+    <Content Include="Views\Socios\VerTramitesSubidos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,38 +1,14 @@
-﻿@using MAASoft.HomeBankingWeb.Sitio.Core;
-@model MAASoft.HomeBankingWeb.Sitio.ViewModels.CargaDeTramitesViewModel
+﻿@model MAASoft.HomeBankingWeb.Sitio.ViewModels.CargaDeTramitesViewModel
 @{
-    ViewBag.Title = MAASoft.HomeBankingWeb.Sitio.Configuracion.Configuracion.CargaDeTramitesTitulo;
+    ViewBag.Title = "Lista de Documentos subidos por el usuario: ";
 }
 
-<h2 class="page-title">@ViewBag.Title</h2>
+<h3 class="page-title">@ViewBag.Title @Model.Nombre</h3>
 <br />
 @using (Html.BeginForm("CargaDeTramites", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <br />
 
-    <label class="form-label" for="filesText">Cargue su Documento:</label>
-    <br />
-    <input class="imputClass" type="file" name="files" id="file1" accept=".pdf,.doc,.docx,.xls,.xlsx" />
-    <input class="imputClass" type="file" name="files" id="file2" accept=".pdf,.doc,.docx,.xls,.xlsx" />
-    <input class="imputClass" type="file" name="files" id="file3" accept=".pdf,.doc,.docx,.xls,.xlsx" />
-
-    <br />
-    <br />
-
-    <input type="submit" value="Subir documentos" />
-
-    <br />
-    <br />
-
-    @ViewBag.Message
-
-    <br />
-
-}
-@using (Html.BeginForm("CargaDeTramites", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-
-    <h2>Lista de documentos del Usuario:</h2>
+    <h4>Lista de documentos del Usuario:</h4>
 
     <table class="table">
         <tr>
@@ -40,18 +16,18 @@
             <th></th>
             <th></th>
         </tr>
-            @for (var i = 0; i <= Model.Archivos.Count - 1; i++)
-            {
-                <tr>
-                    <td>@Model.Archivos[i].ToString() </td>
-                    <td>@Html.ActionLink("Descargar", "Descargar", new { FileName = @Model.Archivos[i].ToString() }) </td>
-                    <td></td>
-                    <td>
-                    @Html.ActionLink("Eliminar", "Borrar", new { FileName = @Model.Archivos[i].ToString() },
-                    new { onclick = "return confirm('Seguro que desea eliminar el archivo?');" })
-                    </td>
-                </tr>
-            }
+        @for (var i = 0; i <= Model.Archivos.Count - 1; i++)
+        {
+            <tr>
+                <td>@Model.Archivos[i].ToString() </td>
+                <td>@Html.ActionLink("Descargar", "Descargar", new { UserName = Model.UserName, FileName = @Model.Archivos[i].ToString() }) </td>
+                <td></td>
+                <td>
+                @Html.ActionLink("Eliminar", "Borrar", new { Id = Model.IdUsuario, UserName = Model.UserName, FileName = @Model.Archivos[i].ToString() },
+                new { onclick = "return confirm('Seguro que desea eliminar el archivo?');" })
+            </td>
+        </tr>
+    }
     </table>
 }
 

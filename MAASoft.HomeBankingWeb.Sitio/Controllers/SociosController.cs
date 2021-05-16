@@ -5,6 +5,7 @@ using MAASoft.HomeBankingWeb.Sitio.Repositorios;
 using MAASoft.HomeBankingWeb.Sitio.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -199,11 +200,38 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             return View(model);
         }
 
-        #endregion
+        public ActionResult VerTramitesSubidos(string id)
+        {
+            var socio = SociosRepositorio.Obtener(id);
+            var usuario = UsuariosRepositorio.ObtenerPorId(id);
+            if (socio == null || usuario == null)
+            {
+                return RedirectToAction("Index");
+            }
 
-        #region Methods
+            var viewModel = new CargaDeTramitesViewModel
+            {
+                IdUsuario = id,
+                UserName = usuario.UserName,
+                Nombre = socio.NombreApellidoORazonSocial,
+                Archivos = FilesHelper.ObtenerTramitesSubidos(usuario.UserName)
+            };
 
-        public SociosViewModel CrearSociosViewModel(
+            return View(viewModel);
+        }
+
+        [HttpPost,
+        ValidateAntiForgeryToken]
+        public ActionResult VerTramitesSubidos(string id, SocioViewModel model)
+        {
+            return View(model);
+        }
+
+            #endregion
+
+            #region Methods
+
+            public SociosViewModel CrearSociosViewModel(
             string nombreApellidoORazonSocial = null,
             string email = null,
             byte? idSucursal = null,
@@ -241,6 +269,18 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
         {
             viewModel.SucursalesSelectList = ListasHelper.CrearSucursalesSelectList();
             viewModel.TiposCuentaSelectList = ListasHelper.CrearTiposCuentaSelectList();
+        }
+
+        public FileResult Descargar(string UserName, string FileName)
+        {
+            var FileVirtualPath = "~/DocumentosSubidos/" + UserName + "/" + FileName;
+            return File(FileVirtualPath, "application/force- download", Path.GetFileName(FileVirtualPath));
+        }
+
+        public ActionResult Borrar(string Id, string UserName, string FileName)
+        {
+            FilesHelper.BorrarTramiteSubido(UserName, FileName);
+            return RedirectToAction("VerTramitesSubidos", "Socios", new { id = Id });
         }
 
         #endregion

@@ -686,8 +686,9 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
         public ActionResult CargaDeTramites()
         {
             var viewModel = new CargaDeTramitesViewModel
-            { 
-                Archivos = GetFiles()
+            {
+                UserName = User.Identity.Name,
+                Archivos = FilesHelper.ObtenerTramitesSubidos(User.Identity.Name)
             };
 
             return View(viewModel);
@@ -699,34 +700,33 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
             int count = 0;
             foreach (var file in files)
             {
-                if (file != null && file.ContentLength > 0)
+                try
                 {
-                    try
+                    if (file != null && file.ContentLength > 0)
                     {
-                        string path = Path.Combine(Server.MapPath("~/DocumentosSubidos"),
-                                                   Path.GetFileName(file.FileName));
-                        file.SaveAs(path);
-                        ViewBag.Message = "Arhivo subido exitosamente.";
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                        string path = Server.MapPath("~/DocumentosSubidos/" + User.Identity.Name);
+                        string pathFile = Path.Combine(path, Path.GetFileName(file.FileName));
+                        file.SaveAs(pathFile);
+                        count++;
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    count++;
+                    ViewBag.Message = "El archivo número " + (count + 1) + " presenta un error y no se pudo subir.";
+                    //ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    break;
                 }
             }
 
-            if(count==3)
-            {
+            if (count == 3)
+                ViewBag.Message = "Arhivos subidos exitosamente.";
+            else if (count == 0)
                 ViewBag.Message = "No ha especificado ningun archivo.";
-            }
 
             var viewModel = new CargaDeTramitesViewModel
             {
-                Archivos = GetFiles()
+                UserName = User.Identity.Name,
+                Archivos = FilesHelper.ObtenerTramitesSubidos(User.Identity.Name)
             };
 
             return View(viewModel);
@@ -1007,35 +1007,14 @@ namespace MAASoft.HomeBankingWeb.Sitio.Controllers
 
         public FileResult Descargar(string FileName)
         {
-            var FileVirtualPath = "~/DocumentosSubidos/" + FileName;
+            var FileVirtualPath = "~/DocumentosSubidos/" + User.Identity.Name + "/" + FileName;
             return File(FileVirtualPath, "application/force- download", Path.GetFileName(FileVirtualPath));
         }
 
         public ActionResult Borrar(string FileName)
         {
-            string root = Server.MapPath("/");
-            string downloadFolder = "DocumentosSubidos\\";
-            string authorsFile = FileName;
-            string route = Path.Combine(root, downloadFolder, authorsFile);
-            if (System.IO.File.Exists(route))
-            {  
-                System.IO.File.Delete(Path.Combine(route));
-            }
+            FilesHelper.BorrarTramiteSubido(User.Identity.Name, FileName);
             return RedirectToAction("CargaDeTramites", "Home");
-        }
-
-        private List<string> GetFiles()
-        {
-            var dir = new System.IO.DirectoryInfo(Server.MapPath("~/DocumentosSubidos"));
-            System.IO.FileInfo[] fileNames = dir.GetFiles("*.*");
-
-            List<string> items = new List<string>();
-            foreach (var file in fileNames)
-            {
-                items.Add(file.Name);
-            }
-
-            return items;
         }
 
         #endregion

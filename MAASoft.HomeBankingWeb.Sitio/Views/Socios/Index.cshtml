@@ -46,6 +46,7 @@
                     <td>@item.EstaBloqueadoFormateado</td>
                     <td class="text-center">
                         <a href="@Url.Action("Editar", "Socios", new { id = item.Id })" class="btn btn-xs btn-info" title="Editar"><span class="glyphicon glyphicon-list-alt"></span></a>
+                        <a href="@Url.Action("VerTramitesSubidos", "Socios", new { id = item.Id })" class="btn btn-xs btn-info" title="Tramites Subidos"><span class="glyphicon glyphicon-file"-></span></a>
                         <div style="display: inline-block">
                             @using (Html.BeginForm())
                             {
